@@ -40,7 +40,7 @@ UA = "WordDrop word-bank builder (https://github.com/) python-requests"
 # Zipf bands calibrated against the hand-written seed: candid 3.45, ephemeral 2.99, laconic 2.39.
 EVERYDAY_MIN = 3.4
 ADVANCED_MIN = 2.6
-CANDIDATE_MIN, CANDIDATE_MAX = 1.9, 3.7
+CANDIDATE_MIN, CANDIDATE_MAX = 1.9, 4.0
 # Share of the new words drawn from each tier. Rarer words are where the app earns its keep,
 # but they also have the worst Wiktionary coverage, so RARE gets the smallest quota.
 TIER_SHARE = {"EVERYDAY": 0.30, "ADVANCED": 0.45, "RARE": 0.25}
@@ -52,9 +52,9 @@ POS = {"noun": "noun", "verb": "verb", "adj": "adjective", "adv": "adverb"}
 SKIP_TAGS = {
     "form-of", "obsolete", "archaic", "dated", "vulgar", "offensive", "derogatory", "slang",
     "rare", "nonstandard", "misspelling", "alternative", "abbreviation", "initialism", "acronym",
-    "proscribed", "humorous", "ethnic", "religious-slur", "historical", "informal", "colloquial",
-    "childish", "euphemistic", "uncommon", "regional", "dialectal",
+    "proscribed", "ethnic", "religious-slur", "regional", "dialectal", "childish",
 }
+ARCHAIC_EXAMPLE = re.compile(r"\b(thou|thee|thy|thine|hath|doth|ye|shalt|art)\b", re.I)
 BAD_GLOSS = re.compile(
     r"(?i)^(plural|past|present participle|third-person|comparative|superlative|alternative|"
     r"misspelling|obsolete|synonym of|a (person|man|woman) (from|of) )|\b(above|below|see also|see \w+\.?$|"
@@ -68,7 +68,7 @@ CATEGORY_HINTS = {
     "literature": re.compile(r"\b(literature|rhetoric|linguistics|poetry|grammar|writing|fiction|"
                              r"narratology|prosody|literary)", re.I),
 }
-MIN_GLOSS, MAX_GLOSS, MAX_EXAMPLE = 20, 170, 150
+MIN_GLOSS, MAX_GLOSS, MAX_EXAMPLE = 20, 220, 160
 
 
 def difficulty(word: str) -> str:
@@ -140,16 +140,20 @@ def clean(s: str) -> str:
 
 
 def pick_example(sense: dict) -> str | None:
+    """Prefer editor-written usage examples; fall back to a short, modern quotation."""
+    usable = []
     for ex in sense.get("examples", []):
-        if ex.get("type") == "quotation" or ex.get("ref"):
-            continue
         text = clean(ex.get("text", ""))
         if not (20 <= len(text) <= MAX_EXAMPLE and text[0].isupper() and text[-1] in ".!?"):
             continue
-        if re.search(r"\d|https?:|\[|\]|\bI\b.*\bI\b", text):  # dates, URLs, editorial brackets, diary-ish
+        if re.search(r"\d|https?:|\[|\]|\bI\b.*\bI\b|…|\.\.\.", text):  # dates, URLs, brackets, diary-ish, elisions
             continue
-        return text
-    return None
+        if ARCHAIC_EXAMPLE.search(text):
+            continue
+        quotation = ex.get("type") == "quotation" or bool(ex.get("ref"))
+        usable.append((quotation, text))
+    usable.sort(key=lambda q: q[0])  # False (usage example) before True (quotation)
+    return usable[0][1] if usable else None
 
 
 def good_synonym(s: str, word: str) -> bool:
@@ -157,8 +161,11 @@ def good_synonym(s: str, word: str) -> bool:
 
 
 def self_referential(gloss: str, word: str) -> bool:
-    """'patience: the quality of being patient' teaches nothing."""
-    return re.search(rf"\b{re.escape(word[:4])}", gloss, re.I) is not None
+    """
+    'patience: the quality of being patient' teaches nothing. Only short glosses count: a long
+    definition that happens to mention the root ("tankard: a large drinking vessel…") is fine.
+    """
+    return len(gloss) < 45 and re.search(rf"\b{re.escape(word[:4])}", gloss, re.I) is not None
 
 
 def category_for(entry: dict, sense: dict) -> str | None:
@@ -243,7 +250,9 @@ def main() -> int:
     session.headers["User-Agent"] = UA
     new_words: list[dict] = []
     with ThreadPoolExecutor(max_workers=args.workers) as ex:
+        shortfall = 0
         for tier, pool in pools.items():
+            quota = quotas[tier] + shortfall  # a tier that runs dry hands its remainder down
             accepted: dict[str, dict] = {}
             fetched = 0
             chunk = max(200, args.workers * 40)
@@ -258,10 +267,14 @@ def main() -> int:
                         seed = to_seed(w, entries)
                         if seed:
                             accepted[w] = seed
-                print(f"  [{tier}] fetched {fetched}, accepted {len(accepted)}/{quotas[tier]}", file=sys.stderr)
-                if len(accepted) >= quotas[tier]:
+                print(f"  [{tier}] fetched {fetched}, accepted {len(accepted)}/{quota}", file=sys.stderr)
+                if len(accepted) >= quota:
                     break
-            new_words += [accepted[w] for w in pool if w in accepted][: quotas[tier]]
+            taken = [accepted[w] for w in pool if w in accepted][:quota]
+            new_words += taken
+            shortfall = quota - len(taken)
+        if shortfall:
+            print(f"WARNING: {shortfall} short of target; grow --pool or loosen filters", file=sys.stderr)
 
     by_tier = {t: sum(1 for w in new_words if w["difficulty"] == t) for t in TIER_SHARE}
     by_cat = {c: sum(1 for w in new_words if w["category"] == c) for c in ("science", "business", "literature", None)}

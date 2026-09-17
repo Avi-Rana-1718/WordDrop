@@ -44,6 +44,8 @@ Long-press an empty spot on your home screen → Widgets → WordDrop. Resize it
 PRIVACY
 WordDrop collects nothing. It has no internet access and no analytics. See the privacy policy for details.
 
+Definitions, pronunciations and examples are adapted from Wiktionary (CC BY-SA 3.0).
+
 ## Category
 
 Education
@@ -61,7 +63,7 @@ vocabulary, word of the day, widget, english, learning
 
 | Asset | Spec | Notes |
 |---|---|---|
-| App icon | 512×512 PNG, 32-bit, no alpha in the visible area | Export from Android Studio: right-click `res` → New → Image Asset, or render `ic_launcher` from a device screenshot |
+| App icon | 512×512 PNG, 32-bit, no alpha in the visible area | **Done:** `docs/play/ic_launcher_512.png` (same artwork as the adaptive launcher icon) |
 | Feature graphic | 1024×500 PNG/JPG | Required. Widget mockup on the cream/dark editorial background works well |
 | Phone screenshots | 2–8, 16:9 or 9:16, min 320px, max 3840px | Required. Suggested: widget on home screen (both sizes), Today screen, word detail, Saved list, Quiz, Settings |
 | 7" / 10" tablet screenshots | Optional | Skip for 1.0 |

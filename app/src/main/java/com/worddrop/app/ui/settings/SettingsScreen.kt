@@ -203,6 +203,25 @@ fun SettingsScreen(onBack: () -> Unit, vm: SettingsViewModel = hiltViewModel()) 
                         },
                     )
                 }
+
+                // Word bank text is Wiktionary content under CC BY-SA; the licence requires credit.
+                Group(stringResource(R.string.settings_about)) {
+                    Column {
+                        Hairline()
+                        Text(
+                            stringResource(R.string.settings_about_wiktionary),
+                            style = WordDropType.caption.copy(fontSize = 13.sp),
+                            color = wd.faint,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    runCatching { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(WIKTIONARY_LICENCE_URL))) }
+                                }
+                                .padding(vertical = 14.dp),
+                        )
+                        Hairline()
+                    }
+                }
             }
         }
         SnackbarHost(hostState = snackbar, modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 24.dp)) { data ->
@@ -210,6 +229,8 @@ fun SettingsScreen(onBack: () -> Unit, vm: SettingsViewModel = hiltViewModel()) 
         }
     }
 }
+
+private const val WIKTIONARY_LICENCE_URL = "https://en.wiktionary.org/wiki/Wiktionary:Copyrights"
 
 @Composable
 private fun RefreshInterval.label(): String = when (this) {

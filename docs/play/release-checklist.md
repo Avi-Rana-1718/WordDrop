@@ -58,7 +58,7 @@ Play Console:
 | Item | Where |
 |---|---|
 | Upload keystore + `keystore.properties` | Project root |
-| 512×512 icon PNG | Play Console → Main store listing |
+| 512×512 icon PNG — ready at `docs/play/ic_launcher_512.png` | Play Console → Main store listing |
 | 1024×500 feature graphic | Play Console → Main store listing |
 | 2–8 phone screenshots | Play Console → Main store listing |
 | Public privacy policy URL | Play Console → App content → Privacy policy |
@@ -71,5 +71,5 @@ Play Console:
 ## Recommended, not required
 
 - **Internal testing track first.** Upload there, install via the opt-in link on your own phone, then promote to production. Catches signing/AAB issues without a public release.
-- **Word bank is 61 words.** At the 4-hour refresh setting a user cycles the whole bank in ~10 days and starts seeing repeats. Not a Play blocker, but it will drive early reviews. Consider growing the bank before or shortly after launch.
+- **Word bank content licence.** Most entries come from Wiktionary via `tools/build_word_bank.py` (CC BY-SA 3.0). Credit lives in Settings → About and in the store description; keep both if you touch them. To grow the bank later: `python tools/build_word_bank.py --target N` (bumps the bank version so existing installs re-import).
 - Google now requires new personal developer accounts to run a closed test with 12+ testers for 14 days before production access is granted. If your account is new, budget for that.

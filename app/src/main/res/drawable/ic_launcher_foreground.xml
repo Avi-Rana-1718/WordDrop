@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- A drop-shaped bookmark in brick on paper: the "word drop". Safe zone is the centre 66dp of 108dp. -->
+<!-- Newsreader "W" in ink with a brick drop at its foot: the word drop.
+     The W outline is the font's own glyph (OFL, see app/licenses/OFL_newsreader.txt), scaled to a
+     50dp em and centred at (52, 53). Safe zone is the centre 66dp of 108dp; artwork spans 28–77dp. -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp"
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
     <path
-        android:fillColor="#9A3B2E"
-        android:pathData="M54,26 C54,26 36,44 36,58 C36,68 44,76 54,76 C64,76 72,68 72,58 C72,44 54,26 54,26 Z" />
+        android:fillColor="#1C1917"
+        android:pathData="M52.2,40.2 L41.3,70.25 H40.12 L32.17,38.58 L28.47,37.23 V36.25 H40.6 V37.23 L36.27,38.52 L42.1,64.12 L52.35,35.75 H53.58 L64.4,65.6 L69.53,38.52 L65.25,37.23 V36.25 H75.53 V37.23 L71.9,38.52 L64.3,70.25 H63.12 Z" />
+    <!-- Drop: tip at (72,56), 15dp tall, 9dp wide, round bottom -->
     <path
-        android:fillColor="#F6F1E8"
-        android:pathData="M47,52 L61,52 L61,70 L54,65 L47,70 Z" />
+        android:fillColor="#9A3B2E"
+        android:pathData="M72,56 C76.05,62.75 76.5,65.6 76.5,66.5 A4.5,4.5 0 0,1 67.5,66.5 C67.5,65.6 67.95,62.75 72,56 Z" />
 </vector>
