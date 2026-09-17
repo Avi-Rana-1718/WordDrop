@@ -5,7 +5,9 @@ import android.net.Uri
 import android.provider.Settings as AndroidSettings
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import android.content.Context
 import androidx.compose.foundation.clickable
+import com.worddrop.app.BuildConfig
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -204,6 +206,20 @@ fun SettingsScreen(onBack: () -> Unit, vm: SettingsViewModel = hiltViewModel()) 
                     )
                 }
 
+                Group(stringResource(R.string.settings_support)) {
+                    Column {
+                        Hairline()
+                        LinkRow(stringResource(R.string.settings_report_issue), ISSUES_EMAIL) {
+                            context.sendEmail(ISSUES_EMAIL, context.getString(R.string.settings_report_issue_subject, BuildConfig.VERSION_NAME))
+                        }
+                        Hairline()
+                        LinkRow(stringResource(R.string.settings_contact), CONTACT_EMAIL) {
+                            context.sendEmail(CONTACT_EMAIL, null)
+                        }
+                        Hairline()
+                    }
+                }
+
                 // Word bank text is Wiktionary content under CC BY-SA; the licence requires credit.
                 Group(stringResource(R.string.settings_about)) {
                     Column {
@@ -231,6 +247,30 @@ fun SettingsScreen(onBack: () -> Unit, vm: SettingsViewModel = hiltViewModel()) 
 }
 
 private const val WIKTIONARY_LICENCE_URL = "https://en.wiktionary.org/wiki/Wiktionary:Copyrights"
+private const val ISSUES_EMAIL = "issues@avirana.com"
+private const val CONTACT_EMAIL = "hello@avirana.com"
+
+/** Opens the user's mail app pre-addressed. mailto: keeps us out of needing any permission. */
+private fun Context.sendEmail(to: String, subject: String?) {
+    val uri = Uri.Builder().scheme("mailto").opaquePart(to)
+        .apply { if (subject != null) appendQueryParameter("subject", subject) }
+        .build()
+    runCatching { startActivity(Intent(Intent.ACTION_SENDTO, uri)) }
+}
+
+/** Label on the left, the address on the right; the whole row is the tap target. */
+@Composable
+private fun LinkRow(label: String, value: String, onClick: () -> Unit) {
+    Row(
+        modifier = Modifier.fillMaxWidth().clickable(onClick = onClick).heightIn(min = 56.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(label, style = WordDropType.body, color = wd.ink, modifier = Modifier.weight(1f))
+        Text(value, style = WordDropType.bodySmall, color = wd.muted)
+        Spacer(Modifier.width(6.dp))
+        Icon(WdIcons.ChevronRight, contentDescription = null, tint = wd.hairline, modifier = Modifier.size(18.dp))
+    }
+}
 
 @Composable
 private fun RefreshInterval.label(): String = when (this) {

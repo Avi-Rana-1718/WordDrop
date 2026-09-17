@@ -39,4 +39,5 @@ If a future version of the app starts collecting data (for example, optional clo
 
 ## Contact
 
-Questions about this policy: **[your contact email]**
+Questions about this policy: **hello@avirana.com**
+To report a problem with the app: **issues@avirana.com**

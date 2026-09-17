@@ -59,10 +59,10 @@ Play Console:
 |---|---|
 | Upload keystore + `keystore.properties` | Project root |
 | 512×512 icon PNG — ready at `docs/play/ic_launcher_512.png` | Play Console → Main store listing |
-| 1024×500 feature graphic | Play Console → Main store listing |
-| 2–8 phone screenshots | Play Console → Main store listing |
+| 1024×500 feature graphic — ready at `docs/play/assets/feature_graphic_1024x500.png` | Play Console → Main store listing |
+| Phone screenshots — 6 ready in `docs/play/assets/` (`python tools/play_assets.py` regenerates); optional real app screens via `.\tools\capture_screenshots.ps1` | Play Console → Main store listing |
 | Public privacy policy URL | Play Console → App content → Privacy policy |
-| Contact email | Play Console → Store settings, and in `privacy-policy.md` |
+| Contact email — hello@avirana.com (already in `privacy-policy.md` and the app) | Play Console → Store settings |
 | Data safety form | Play Console → App content (answers in store-listing.md) |
 | Content rating questionnaire | Play Console → App content |
 | Target audience | Play Console → App content |

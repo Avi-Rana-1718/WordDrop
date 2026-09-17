@@ -56,7 +56,8 @@ vocabulary, word of the day, widget, english, learning
 
 ## Contact details
 
-- Email: [your contact email]
+- Email (Play Console → Store settings → contact): hello@avirana.com
+- Issues: issues@avirana.com (also reachable in-app: Settings → Support)
 - Privacy policy URL: [publish docs/play/privacy-policy.md somewhere public, e.g. your site or a GitHub Pages page, and paste the URL here]
 
 ## Graphic assets (you must supply)
@@ -64,8 +65,8 @@ vocabulary, word of the day, widget, english, learning
 | Asset | Spec | Notes |
 |---|---|---|
 | App icon | 512×512 PNG, 32-bit, no alpha in the visible area | **Done:** `docs/play/ic_launcher_512.png` (same artwork as the adaptive launcher icon) |
-| Feature graphic | 1024×500 PNG/JPG | Required. Widget mockup on the cream/dark editorial background works well |
-| Phone screenshots | 2–8, 16:9 or 9:16, min 320px, max 3840px | Required. Suggested: widget on home screen (both sizes), Today screen, word detail, Saved list, Quiz, Settings |
+| Feature graphic | 1024×500 PNG/JPG | **Done:** `docs/play/assets/feature_graphic_1024x500.png` (regenerate with `python tools/play_assets.py`) |
+| Phone screenshots | 2–8, 16:9 or 9:16, min 320px, max 3840px | **6 done** in `docs/play/assets/` (1080×1920): hero phone, free forever, dark theme, filters, quiz, widget sizes. Play allows 8 — optionally swap in 1–2 real in-app screens via `.\tools\capture_screenshots.ps1` |
 | 7" / 10" tablet screenshots | Optional | Skip for 1.0 |
 
 ## Data safety form answers

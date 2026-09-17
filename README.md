@@ -13,7 +13,7 @@
 [![Min SDK](https://img.shields.io/badge/minSdk-26-555?logo=android&logoColor=white)](app/build.gradle.kts)
 [![License](https://img.shields.io/badge/License-Apache%202.0-D22128?logo=apache&logoColor=white)](LICENSE)
 
-[What it does](#what-it-does) · [Features](#features) · [Architecture](#architecture) · [Quick start](#quick-start) · [Word bank](#word-bank) · [Development](#development) · [Release](#release) · [License](#license)
+[What it does](#what-it-does) · [Features](#features) · [Architecture](#architecture) · [Quick start](#quick-start) · [Word bank](#word-bank) · [Development](#development) · [Release](#release) · [Support](#support) · [License](#license)
 
 </div>
 
@@ -28,6 +28,19 @@ Everything is local. The word bank ships inside the APK as JSON, is imported int
 
 > [!NOTE]
 > Scheduled refresh runs through WorkManager with a 30-minute flex window. On phones with aggressive battery management the change may arrive late; it never shows a stale-looking or broken widget because the interval check lives in the repository, not the scheduler.
+
+<p align="center">
+  <img src="docs/play/assets/feature_graphic_1024x500.png" width="720" alt="WordDrop — a new word on your home screen">
+</p>
+
+<p align="center">
+  <img src="docs/play/assets/screenshot_1_hero.png" width="150" alt="Widget on a home screen">
+  <img src="docs/play/assets/screenshot_2_free.png" width="150" alt="Free forever — no subscription, no ads, no account, no internet">
+  <img src="docs/play/assets/screenshot_3_dark.png" width="150" alt="Dark theme">
+  <img src="docs/play/assets/screenshot_4_filters.png" width="150" alt="Difficulty, category and refresh settings">
+  <img src="docs/play/assets/screenshot_5_quiz.png" width="150" alt="Quiz">
+  <img src="docs/play/assets/screenshot_6_sizes.png" width="150" alt="Compact and expanded widget sizes">
+</p>
 
 ## Features
 
@@ -117,7 +130,7 @@ On macOS/Linux use `./gradlew` in place of `.\gradlew.bat`. A prebuilt debug APK
 
 ## Word bank
 
-The bank is [`app/src/main/assets/word_bank.json`](app/src/main/assets/word_bank.json): `{ "version": N, "words": [ … ] }` — currently **3,000 words** (v2: 882 everyday / 1,322 advanced / 735 rare; 61 hand-written, the rest generated from Wiktionary by the script below). Each word:
+The bank is [`app/src/main/assets/word_bank.json`](app/src/main/assets/word_bank.json): `{ "version": N, "words": [ … ] }` — a hand-written core plus entries generated from Wiktionary by the script below. Each word:
 
 ```json
 { "id": "ephemeral", "word": "ephemeral", "phonetic": "/əˈfem(ə)rəl/", "partOfSpeech": "adjective",
@@ -202,6 +215,11 @@ Release signing reads an untracked `keystore.properties` (see [`keystore.propert
 
 - [`docs/worddrop-prd.md`](docs/worddrop-prd.md) — product requirements
 - [`docs/worddrop-technical-design.md`](docs/worddrop-technical-design.md) — technical design (the `Tech §x.y` references in code comments point here)
+
+## Support
+
+- **Report an issue**: [issues@avirana.com](mailto:issues@avirana.com) — include your Android version and what you tapped. In the app: Settings → Support → Report an issue (pre-fills the app version).
+- **Anything else**: [hello@avirana.com](mailto:hello@avirana.com)
 
 ## License
 
