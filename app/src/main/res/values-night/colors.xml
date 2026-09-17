@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="paper">#1A1714</color>
+    <color name="surface">#24201C</color>
+    <color name="ink">#EFE8DC</color>
+    <color name="muted">#A39A8D</color>
+    <color name="faint">#8E857A</color>
+    <color name="hairline">#3A342E</color>
+    <color name="accent">#D0705F</color>
+
+    <color name="widget_surface">#F524201C</color>
+    <color name="widget_ink">#EFE8DC</color>
+    <color name="widget_muted">#A39A8D</color>
+    <color name="widget_faint">#8E857A</color>
+</resources>

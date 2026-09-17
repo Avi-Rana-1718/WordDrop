@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A drop-shaped bookmark in brick on paper: the "word drop". Safe zone is the centre 66dp of 108dp. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#9A3B2E"
+        android:pathData="M54,26 C54,26 36,44 36,58 C36,68 44,76 54,76 C64,76 72,68 72,58 C72,44 54,26 54,26 Z" />
+    <path
+        android:fillColor="#F6F1E8"
+        android:pathData="M47,52 L61,52 L61,70 L54,65 L47,70 Z" />
+</vector>
